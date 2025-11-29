@@ -5,19 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { MessageSquare, MapPin, Layers, Send, Star } from "lucide-react";
 import MapComponent from "@/components/map";
+import locationsData from "@/data/locations.json";
 
-const allPlaces = [
-  { title: "Paoay Church", type: "Church", timeRange: "6:00 AM - 6:00 PM", rating: 4.8, description: "UNESCO World Heritage baroque church" },
-  { title: "Bangui Windmills", type: "Landmark", timeRange: "Open 24 hours", rating: 4.6, description: "Iconic wind farm along the coast" },
-  { title: "Pagudpud Beach", type: "Beach", timeRange: "Open 24 hours", rating: 4.9, description: "Crystal clear waters and white sand" },
-  { title: "Fort Ilocandia", type: "Resort", timeRange: "8:00 AM - 10:00 PM", rating: 4.5, description: "Luxury resort with golf course" },
-  { title: "Sinking Bell Tower", type: "Historical", timeRange: "7:00 AM - 5:00 PM", rating: 4.4, description: "Historic bell tower sinking into ground" },
-  { title: "Cape Bojeador", type: "Lighthouse", timeRange: "8:00 AM - 5:00 PM", rating: 4.7, description: "Century-old Spanish lighthouse" },
-  { title: "Marcos Museum", type: "Museum", timeRange: "9:00 AM - 4:00 PM", rating: 4.3, description: "Historical museum showcasing local heritage" },
-  { title: "Malacañang of the North", type: "Museum", timeRange: "9:00 AM - 4:00 PM", rating: 4.2, description: "Presidential museum and cultural center" },
-  { title: "La Paz Sand Dunes", type: "Nature", timeRange: "6:00  - 6:00 PM", rating: 4.6, description: "Desert-like sand dunes for adventure" },
-  { title: "Kapurpurawan Rock", type: "Nature", timeRange: "6:00 AM - 6:00 PM", rating: 4.7, description: "Unique white limestone rock formation" },
-];
+const allPlaces = locationsData;
 
 function getIsOpen(timeRange) {
   if (timeRange === "Open 24 hours") return true;
