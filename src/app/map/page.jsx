@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
@@ -7,6 +8,13 @@ import { MessageSquare, MapPin, Layers, Send, Star } from "lucide-react";
 import MapComponent from "@/components/map";
 import locationsData from "@/data/locations.json";
 import { useSearchParams } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 const allPlaces = locationsData;
 
@@ -85,6 +93,7 @@ const compareByOpenStatus = (a, b) => {
 
 export default function Map() {
   const searchParams = useSearchParams();
+  const [selectedPlace, setSelectedPlace] = useState(null);
   
   // Query: findPlacesForCards(Params) :- 
   //   ∀ Place ∈ allPlaces | shouldShowInCards(Place, Params)
@@ -104,12 +113,12 @@ export default function Map() {
       <nav className="bg-white border-b border-slate-200 px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 font-medium text-xl tracking-tight">
+            <Link href="/" className="flex items-center gap-1 font-medium text-xl tracking-tight hover:opacity-80 transition-opacity">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg text-white">
                 <Image src="/map-pin-area.svg" alt="Ilocos Norte Tourism Path Planner" width={20} height={20} />
               </span>
               <span>Ilocos Norte Tourism Path Planner</span>
-            </div>
+            </Link>
           </div>
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
             <div className="transition-colors hover:text-black">
@@ -129,10 +138,7 @@ export default function Map() {
 
       {/* Main Content - 3 Column Layout */}
       <main className="flex h-[calc(100vh-73px)]">
-        {/* Left Panel - AI Chatbot */}
-        {/* Jeiwinfre's code will go here */}
-
-        {/* Middle Panel - Destination Cards */}
+        {/* Left Panel - Destination Cards */}
         <section className="w-[420px] bg-white border-r border-slate-200 flex flex-col">
           <div className="p-4 border-b border-slate-200">
             <div className="flex items-center justify-between">
@@ -149,6 +155,7 @@ export default function Map() {
               {sortedPlacesForCards.map((place, index) => (
                 <div
                   key={index}
+                  onClick={() => setSelectedPlace(place)}
                   className="bg-slate-50 rounded-xl border border-slate-100 hover:border-slate-300 hover:shadow-sm transition-all cursor-pointer overflow-hidden"
                 >
                   {/* Photo placeholder */}
@@ -162,8 +169,8 @@ export default function Map() {
                     <div className="flex justify-between items-start gap-1">
                       <h3 className="font-semibold text-slate-900 text-sm line-clamp-1">{place.title}</h3>
                       <div className="flex items-center gap-0.5 text-xs shrink-0">
-                        <Star className="w-3 h-3 fill-slate-900 text-slate-900" />
-                        <span>{place.rating}</span>
+                        <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                        <span className="text-yellow-600 font-medium">{place.rating}</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5 text-xs">
@@ -172,7 +179,7 @@ export default function Map() {
                         {getIsOpen(place.timeRange) ? '· Open' : '· Closed'}
                       </span>
                     </div>
-                    <p className="text-slate-500 text-xs">{place.type}</p>
+                    <p className="text-slate-500 text-xs capitalize">{place.type}</p>
                     <p className="text-slate-400 text-xs truncate">{place.description}</p>
                   </div>
                 </div>
@@ -192,6 +199,56 @@ export default function Map() {
           <MapComponent destinations={placesForMap} />
         </section>
       </main>
+
+      {/* Destination Details Dialog */}
+      <Dialog open={!!selectedPlace} onOpenChange={(open) => !open && setSelectedPlace(null)}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          {selectedPlace && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-2xl">{selectedPlace.title}</DialogTitle>
+                <div className="flex items-center gap-4 mt-2 text-sm text-slate-500">
+                  <span className="flex items-center gap-1">
+                    <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                    <span className="font-medium text-yellow-600">{selectedPlace.rating}</span>
+                  </span>
+                  <span className="text-slate-400">·</span>
+                  <span className="capitalize">{selectedPlace.type}</span>
+                  <span className="text-slate-400">·</span>
+                  <span className="text-slate-500">{selectedPlace.timeRange}</span>
+                  <span className={`font-medium ${getIsOpen(selectedPlace.timeRange) ? 'text-green-600' : 'text-red-600'}`}>
+                    {getIsOpen(selectedPlace.timeRange) ? '· Open' : '· Closed'}
+                  </span>
+                </div>
+              </DialogHeader>
+              
+              <div className="mt-4 space-y-4">
+                {/* Photo placeholder */}
+                <div className="w-full h-64 bg-slate-200 rounded-lg relative">
+                  <div className="absolute inset-0 flex items-center justify-center text-slate-400">
+                    Photo
+                  </div>
+                </div>
+                
+                {/* Description */}
+                <div>
+                  <h3 className="font-semibold text-slate-900 mb-2">About</h3>
+                  <p className="text-slate-600 leading-relaxed">{selectedPlace.description}</p>
+                </div>
+                
+                {/* Location Info */}
+                <div className="pt-4 border-t border-slate-200">
+                  <h3 className="font-semibold text-slate-900 mb-2">Location</h3>
+                  <div className="flex items-center gap-2 text-slate-600">
+                    <MapPin size={16} />
+                    <span>{selectedPlace.latitude.toFixed(6)}, {selectedPlace.longitude.toFixed(6)}</span>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
