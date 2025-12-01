@@ -1,0 +1,97 @@
+{
+  "userLocation": {
+    "title": "Your Location (CCIS)",
+    "latitude": 18.059779,
+    "longitude": 120.545021
+  },
+  "distances": {
+    "Saint William's Cathedral (Diocese of Laoag)": {
+      "distance": 19201.9,
+      "duration": 2261.5
+    },
+    "San Agustin Church of Paoay": {
+      "distance": 3451.3,
+      "duration": 822.7
+    },
+    "La Virgen Milagrosa": {
+      "distance": 27532.7,
+      "duration": 2811.9
+    },
+    "Blue Lagoon": {
+      "distance": 106514.9,
+      "duration": 8175.8
+    },
+    "Saud Beach": {
+      "distance": 100310.5,
+      "duration": 7465.1
+    },
+    "Badoc Island White Beach": {
+      "distance": 29999.5,
+      "duration": 3081.5
+    },
+    "Museo Ilocos Norte": {
+      "distance": 19097.9,
+      "duration": 2209
+    },
+    "Malacañang of the North": {
+      "distance": 14164,
+      "duration": 1645.7
+    },
+    "Juan Luna Shrine (Badoc)": {
+      "distance": 23021.6,
+      "duration": 1983.9
+    },
+    "Batac Riverside Empanadaan": {
+      "distance": 2345.8,
+      "duration": 656.8
+    },
+    "Cuisine de Iloco Restaurant": {
+      "distance": 23799.7,
+      "duration": 2394.3
+    },
+    "Eagle’s Nest Bar and Restaurant": {
+      "distance": 27388.4,
+      "duration": 2815.9
+    },
+    "Kapurpurawan Rock Formation": {
+      "distance": 72669,
+      "duration": 5617.2
+    },
+    "Tanap-Avis Falls": {
+      "distance": 75681.3,
+      "duration": 6019.9
+    },
+    "Bantay Abot Cave": {
+      "distance": 109048.1,
+      "duration": 8147.7
+    },
+    "Bangui Windmills": {
+      "distance": 82609.9,
+      "duration": 6146.1
+    },
+    "Cape Bojeador Lighthouse": {
+      "distance": 64669.9,
+      "duration": 4995.6
+    },
+    "Patapat Viaduct": {
+      "distance": 111233.4,
+      "duration": 8204.5
+    },
+    "Paoay Sand Dunes": {
+      "distance": 9169,
+      "duration": 1432
+    },
+    "Batac Public Market": {
+      "distance": 3478.4,
+      "duration": 881.8
+    },
+    "Laoag City Commercial Complex": {
+      "distance": 18962.9,
+      "duration": 2178.1
+    },
+    "Nagbacalan Loomweavers": {
+      "distance": 10935.8,
+      "duration": 1261.9
+    }
+  }
+}

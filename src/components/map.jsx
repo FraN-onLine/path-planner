@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { createRoot } from "react-dom/client";
 import "mapbox-gl/dist/mapbox-gl.css";
 import {
@@ -17,6 +17,10 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import { sortByClosestDistance } from "@/lib/ucs";
+import userDistancesData from "@/data/user-distances.json";
+import { getRouteDirections } from "@/lib/directions";
+import DirectionsPanel from "@/components/DirectionsPanel";
 
 // Map location types to Lucide React icons
 function getIconComponent(type) {
@@ -132,35 +136,142 @@ function createUserLocationMarker() {
 export default function Map({ destinations = [] }) {
   const mapContainer = useRef(null);
   const map = useRef(null);
+  const destinationMarkers = useRef([]);
+  const [mapLoaded, setMapLoaded] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentRoute, setCurrentRoute] = useState(null);
+  const [isLoadingRoute, setIsLoadingRoute] = useState(false);
 
-  // Navigate to previous destination
-  const goToPrevious = () => {
-    if (destinations.length === 0) return;
-    const newIndex = currentIndex === 0 ? destinations.length - 1 : currentIndex - 1;
-    setCurrentIndex(newIndex);
-    centerMapOn(destinations[newIndex]);
+  // User location (CCIS)
+  const userLocation = {
+    title: "Your Location (CCIS)",
+    latitude: 18.059779,
+    longitude: 120.545021,
   };
 
-  // Navigate to next destination
-  const goToNext = () => {
-    if (destinations.length === 0) return;
-    const newIndex = currentIndex === destinations.length - 1 ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-    centerMapOn(destinations[newIndex]);
-  };
+  // Sort destinations by closest distance using UCS (memoized)
+  const sortedDestinations = useMemo(() => {
+    return sortByClosestDistance(destinations, userDistancesData);
+  }, [destinations]);
 
-  // Center map on a specific destination
-  const centerMapOn = (destination) => {
-    if (map.current && destination.latitude && destination.longitude) {
+  // Reset to user location (index 0) when destinations change
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [sortedDestinations.length]);
+
+  // Center map on a specific destination (memoized)
+  const centerMapOn = useCallback((destination) => {
+    if (map.current && destination && destination.latitude && destination.longitude) {
       map.current.flyTo({
         center: [destination.longitude, destination.latitude],
         zoom: 12,
         duration: 1500,
       });
     }
+  }, []);
+
+  // Fetch and display route
+  const fetchAndDisplayRoute = useCallback(async (fromLoc, toLoc) => {
+    if (!map.current || !fromLoc || !toLoc) return;
+
+    setIsLoadingRoute(true);
+    
+    try {
+      const route = await getRouteDirections(fromLoc, toLoc);
+      
+      if (route) {
+        setCurrentRoute(route);
+        
+        // Add route to map
+        import("mapbox-gl").then((mapboxgl) => {
+          if (!map.current) return;
+          
+          // Remove existing route if present
+          if (map.current.getSource('route')) {
+            map.current.removeLayer('route');
+            map.current.removeSource('route');
+          }
+
+          // Add route source and layer
+          map.current.addSource('route', {
+            type: 'geojson',
+            data: {
+              type: 'Feature',
+              properties: {},
+              geometry: route.geometry,
+            },
+          });
+
+          map.current.addLayer({
+            id: 'route',
+            type: 'line',
+            source: 'route',
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round',
+            },
+            paint: {
+              'line-color': '#3b82f6',
+              'line-width': 4,
+              'line-opacity': 0.8,
+            },
+          });
+        });
+      }
+    } catch (error) {
+      console.error('Error fetching route:', error);
+    } finally {
+      setIsLoadingRoute(false);
+    }
+  }, []);
+
+  // Navigate to previous destination
+  const goToPrevious = () => {
+    if (sortedDestinations.length === 0) return;
+    const newIndex = currentIndex === 0 ? sortedDestinations.length : currentIndex - 1;
+    setCurrentIndex(newIndex);
+
+    if (newIndex === 0) {
+      // Back to user location
+      centerMapOn({ latitude: userLocation.latitude, longitude: userLocation.longitude });
+      // Show route to first destination
+      if (sortedDestinations[0]) {
+        fetchAndDisplayRoute(userLocation, sortedDestinations[0]);
+      }
+    } else {
+      // At a destination
+      centerMapOn(sortedDestinations[newIndex - 1]);
+      // Show route from previous location
+      const from = newIndex === 1 ? userLocation : sortedDestinations[newIndex - 2];
+      const to = sortedDestinations[newIndex - 1];
+      fetchAndDisplayRoute(from, to);
+    }
   };
 
+  // Navigate to next destination
+  const goToNext = () => {
+    if (sortedDestinations.length === 0) return;
+    const newIndex = currentIndex === sortedDestinations.length ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
+
+    if (newIndex === 0) {
+      // Back to user location
+      centerMapOn({ latitude: userLocation.latitude, longitude: userLocation.longitude });
+      // Show route to first destination
+      if (sortedDestinations[0]) {
+        fetchAndDisplayRoute(userLocation, sortedDestinations[0]);
+      }
+    } else {
+      // Moving to a destination
+      centerMapOn(sortedDestinations[newIndex - 1]);
+      // Show route from previous location
+      const from = newIndex === 1 ? userLocation : sortedDestinations[newIndex - 2];
+      const to = sortedDestinations[newIndex - 1];
+      fetchAndDisplayRoute(from, to);
+    }
+  };
+
+  // Initialize map only once
   useEffect(() => {
     if (!mapContainer.current || map.current) return;
     
@@ -191,18 +302,10 @@ export default function Map({ destinations = [] }) {
         .setLngLat([120.545021, 18.059779])
         .addTo(map.current);
 
-      // Add markers for destinations if provided
-      if (destinations && destinations.length > 0) {
-        destinations.forEach((dest) => {
-          if (dest.latitude && dest.longitude) {
-            const el = createMarkerElement(dest.type, dest.title);
-            
-            const marker = new mapboxgl.default.Marker(el)
-              .setLngLat([dest.longitude, dest.latitude])
-              .addTo(map.current);
-          }
-        });
-      }
+      // Mark map as loaded when ready
+      map.current.on('load', () => {
+        setMapLoaded(true);
+      });
     });
 
     // Cleanup
@@ -212,14 +315,55 @@ export default function Map({ destinations = [] }) {
         map.current = null;
       }
     };
-  }, [destinations]);
+  }, []);
+
+  // Update markers when destinations change (after map is loaded)
+  useEffect(() => {
+    if (!map.current || !mapLoaded) return;
+    
+    import("mapbox-gl").then((mapboxgl) => {
+      // Remove existing destination markers
+      destinationMarkers.current.forEach(marker => marker.remove());
+      destinationMarkers.current = [];
+
+      // Add new markers for destinations
+      if (sortedDestinations && sortedDestinations.length > 0) {
+        sortedDestinations.forEach((dest) => {
+          if (dest.latitude && dest.longitude) {
+            const el = createMarkerElement(dest.type, dest.title);
+            
+            const marker = new mapboxgl.default.Marker(el)
+              .setLngLat([dest.longitude, dest.latitude])
+              .addTo(map.current);
+            
+            destinationMarkers.current.push(marker);
+          }
+        });
+
+        // Start at user location (index 0), show route to first destination
+        const firstDest = sortedDestinations[0];
+        if (firstDest) {
+          // Fetch initial route from user to first destination
+          fetchAndDisplayRoute(userLocation, firstDest);
+        }
+      }
+    });
+  }, [sortedDestinations, mapLoaded, fetchAndDisplayRoute]);
 
   return (
     <div className="relative w-full h-full">
       <div ref={mapContainer} className="w-full h-full" />
       
+      {/* Directions Panel */}
+      {currentRoute && (
+        <DirectionsPanel 
+          route={currentRoute} 
+          onClose={() => setCurrentRoute(null)} 
+        />
+      )}
+      
       {/* Bottom Navigation Control */}
-      {destinations.length > 0 && (
+      {sortedDestinations.length > 0 && (
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10">
           <div className="flex items-center gap-2 bg-white px-4 py-3 rounded-full shadow-lg border border-slate-200">
             <button
@@ -232,10 +376,12 @@ export default function Map({ destinations = [] }) {
             
             <div className="px-2 min-w-[200px] text-center">
               <div className="text-sm font-semibold text-slate-900">
-                {destinations[currentIndex]?.title || 'Unknown'}
+                {currentIndex === 0 
+                  ? userLocation.title 
+                  : sortedDestinations[currentIndex - 1]?.title || 'Unknown'}
               </div>
               <div className="text-xs text-slate-500">
-                {currentIndex + 1} of {destinations.length}
+                {currentIndex} of {sortedDestinations.length}
               </div>
             </div>
             

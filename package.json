@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "generate-graph": "node scripts/generate-graph.js"
+    "generate-graph": "node scripts/generate-graph.js",
+    "generate-user-distances": "node scripts/generate-user-distances.js"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
