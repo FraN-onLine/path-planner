@@ -6,43 +6,88 @@ import Image from "next/image";
 import { MessageSquare, MapPin, Layers, Send, Star } from "lucide-react";
 import MapComponent from "@/components/map";
 import locationsData from "@/data/locations.json";
+import { useSearchParams } from "next/navigation";
 
 const allPlaces = locationsData;
 
-function getIsOpen(timeRange) {
-  if (timeRange === "Open 24 hours") return true;
-  
+// Prolog-style rules for filtering and sorting
+
+// Rule: interest(Type, Params) :- Params[Type] = true
+const interestSelected = (type, params) => params.get(type) === 'true';
+
+// Rule: anyInterestSelected(Params) :- ∃ Interest | interestSelected(Interest, Params)
+const anyInterestSelected = (params) => {
+  const interests = ['churches', 'beaches', 'museums', 'cuisine', 'nature', 'landmarks', 'history', 'shopping'];
+  return interests.some(interest => interestSelected(interest, params));
+};
+
+// Rule: matchesInterest(Place, Params) :- interestSelected(Place.type, Params)
+const matchesInterest = (place, params) => interestSelected(place.type, params);
+
+// Rule: shouldShow(Place, Params) :- 
+//   ¬anyInterestSelected(Params) ∨ matchesInterest(Place, Params)
+const shouldShow = (place, params) => 
+  !anyInterestSelected(params) || matchesInterest(place, params);
+
+// Rule: isOpen24Hours(TimeRange) :- TimeRange = "Open 24 hours"
+const isOpen24Hours = (timeRange) => timeRange === "Open 24 hours";
+
+// Rule: parseTime(TimeString) → Minutes
+const parseTime = (time) => {
+  const [hourMin, period] = time.split(" ");
+  let [hours, minutes] = hourMin.split(":").map(Number);
+  if (period === "PM" && hours !== 12) hours += 12;
+  if (period === "AM" && hours === 12) hours = 0;
+  return hours * 60 + minutes;
+};
+
+// Rule: currentTimeInMinutes() → Minutes
+const currentTimeInMinutes = () => {
   const now = new Date();
-  const currentHour = now.getHours();
-  const currentMinute = now.getMinutes();
-  const currentTime = currentHour * 60 + currentMinute;
+  return now.getHours() * 60 + now.getMinutes();
+};
 
-  const [start, end] = timeRange.split(" - ");
+// Rule: withinTimeRange(CurrentTime, StartTime, EndTime) :- 
+//   CurrentTime >= StartTime ∧ CurrentTime <= EndTime
+const withinTimeRange = (current, start, end) => 
+  current >= start && current <= end;
+
+// Rule: isOpen(TimeRange) :- 
+//   isOpen24Hours(TimeRange) ∨ withinTimeRange(currentTime, startTime, endTime)
+function getIsOpen(timeRange) {
+  if (isOpen24Hours(timeRange)) return true;
   
-  const parseTime = (time) => {
-    const [hourMin, period] = time.split(" ");
-    let [hours, minutes] = hourMin.split(":").map(Number);
-    if (period === "PM" && hours !== 12) hours += 12;
-    if (period === "AM" && hours === 12) hours = 0;
-    return hours * 60 + minutes;
-  };
-
+  const [start, end] = timeRange.split(" - ");
+  const current = currentTimeInMinutes();
   const startTime = parseTime(start);
   const endTime = parseTime(end);
-
-  return currentTime >= startTime && currentTime <= endTime;
+  
+  return withinTimeRange(current, startTime, endTime);
 }
 
+// Rule: compareByOpenStatus(A, B) :- 
+//   isOpen(A) ∧ ¬isOpen(B) → -1
+//   ¬isOpen(A) ∧ isOpen(B) → 1
+//   otherwise → 0
+const compareByOpenStatus = (a, b) => {
+  const aIsOpen = getIsOpen(a.timeRange);
+  const bIsOpen = getIsOpen(b.timeRange);
+  
+  if (aIsOpen && !bIsOpen) return -1;
+  if (!aIsOpen && bIsOpen) return 1;
+  return 0;
+};
+
 export default function Map() {
-  // Sort places: open places first, closed places at the bottom
-  const sortedPlaces = [...allPlaces].sort((a, b) => {
-    const aIsOpen = getIsOpen(a.timeRange);
-    const bIsOpen = getIsOpen(b.timeRange);
-    
-    if (aIsOpen && !bIsOpen) return -1;
-    if (!aIsOpen && bIsOpen) return 1;
-    return 0;
-  });
+  const searchParams = useSearchParams();
+  
+  // Query: findPlaces(Params) :- 
+  //   ∀ Place ∈ allPlaces | shouldShow(Place, Params)
+  const filteredPlaces = allPlaces.filter(place => shouldShow(place, searchParams));
+  
+  // Query: sortPlaces(Places) :- 
+  //   Places sorted by compareByOpenStatus
+  const sortedPlaces = [...filteredPlaces].sort(compareByOpenStatus);
 
   return (
     <div className="relative min-h-screen bg-slate-50 font-sans text-slate-900 overflow-hidden selection:bg-orange-100">
