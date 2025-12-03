@@ -10,27 +10,11 @@
  * @returns {Array} - List sorted from closest to farthest
  */
 export function sortByClosestDistance(destinations, userDistances) {
-  // Step 1: Check if we have destinations to sort
-  if (!destinations || destinations.length === 0) {
-    return []; // No destinations? Return empty list
-  }
-
-  // Step 2: Check if we have distance data
-  if (!userDistances || !userDistances.distances) {
-    console.warn('No distance data available, keeping original order');
-    return [...destinations]; // Return copy of original list
-  }
-
-  // Step 3: Sort destinations by distance (closest first)
+  // Sort destinations by distance (closest first)
   const sorted = [...destinations].sort((placeA, placeB) => {
     // Get distance info for both places
     const distanceToA = userDistances.distances[placeA.title];
     const distanceToB = userDistances.distances[placeB.title];
-
-    // If place A has no distance data, push it to the end
-    if (!distanceToA) return 1;
-    // If place B has no distance data, push it to the end
-    if (!distanceToB) return -1;
 
     // Compare distances: smaller number = closer = comes first
     // Example: 5km - 10km = -5 (negative means A comes before B)
@@ -49,11 +33,6 @@ export function sortByClosestDistance(destinations, userDistances) {
  * @returns {Object|null} - {distance: 5000, duration: 300} or null if not found
  */
 export function getDistanceToDestination(destinationTitle, userDistances) {
-  // Check if we have distance data
-  if (!userDistances || !userDistances.distances) {
-    return null; // No data available
-  }
-
   // Look up the destination and return its distance info
   return userDistances.distances[destinationTitle] || null;
 }
@@ -66,11 +45,6 @@ export function getDistanceToDestination(destinationTitle, userDistances) {
  * @returns {string} - Human-readable text (e.g., "5.42 km")
  */
 export function formatDistance(distanceInMeters) {
-  // Check if distance exists
-  if (!distanceInMeters) {
-    return 'N/A'; // Not available
-  }
-
   // Convert meters to kilometers (1000 meters = 1 km)
   const kilometers = distanceInMeters / 1000;
   
@@ -88,11 +62,6 @@ export function formatDistance(distanceInMeters) {
  * @returns {string} - Human-readable text (e.g., "25 min")
  */
 export function formatDuration(durationInSeconds) {
-  // Check if duration exists
-  if (!durationInSeconds) {
-    return 'N/A'; // Not available
-  }
-
   // Convert seconds to minutes (60 seconds = 1 minute)
   const totalMinutes = Math.round(durationInSeconds / 60);
   
@@ -124,10 +93,10 @@ export function formatDuration(durationInSeconds) {
  * @returns {Array} - Top N closest destinations
  */
 export function getClosestDestinations(destinations, userDistances, limit = 5) {
-  // Step 1: Sort all destinations by distance
+  // Sort all destinations by distance
   const sorted = sortByClosestDistance(destinations, userDistances);
   
-  // Step 2: Take only the first N items (the closest ones)
+  // Take only the first N items (the closest ones)
   // Example: If limit = 5, get the 5 closest places
   return sorted.slice(0, limit);
 }
