@@ -47,19 +47,18 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans text-slate-900 selection:bg-orange-100">
+    <div className="min-h-screen">
       <main className="flex min-h-screen flex-col items-center justify-center px-6 py-12">
-        <div className="w-full max-w-4xl text-center">
-          <h1 className="mb-6 text-4xl font-bold tracking-tight sm:text-5xl">
-            What interests you?
+        <div className="w-full max-w-4xl text-center animate-slide-up">
+          <h1 className="mb-4 text-4xl font-bold tracking-tight sm:text-5xl">
+            <span className="bg-gradient-to-r from-primary to-[color-mix(in_oklch,var(--ring)_60%,var(--primary))] bg-clip-text text-transparent">What interests you?</span>
           </h1>
-          <p className="mb-12 text-lg text-slate-500">
-            Select the experiences you'd like to include in your Ilocos Norte journey.
-            We'll tailor recommendations just for you.
+          <p className="mb-12 text-lg text-foreground/70">
+            Select the experiences you'd like to include in your Ilocos Norte journey. We'll tailor recommendations just for you.
           </p>
 
           <div className="mb-12 grid grid-cols-2 gap-4 sm:grid-cols-4">
-            {INTERESTS.map((interest) => {
+            {INTERESTS.map((interest, idx) => {
               const Icon = interest.icon;
               const isSelected = selectedInterests.includes(interest.id);
 
@@ -67,20 +66,21 @@ export default function Onboarding() {
                 <Card
                   key={interest.id}
                   className={cn(
-                    "cursor-pointer transition-all hover:-translate-y-1 hover:shadow-md border-2",
+                    "cursor-pointer transition-all hover:-translate-y-1 hover:shadow-md hover:scale-[1.02] border-2 bg-card/70 backdrop-blur animate-pop-in",
                     isSelected
-                      ? "border-slate-900 bg-slate-50"
-                      : "border-transparent bg-slate-50 hover:bg-slate-100"
+                      ? "border-primary/60"
+                      : "border-transparent hover:border-border/80"
                   )}
+                  style={{ animationDelay: `${idx * 60}ms` }}
                   onClick={() => toggleInterest(interest.id)}
                 >
                   <CardContent className="flex flex-col items-center justify-center p-6">
                     <div
                       className={cn(
-                        "mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors",
+                        "mb-4 flex h-12 w-12 items-center justify-center rounded-full transition-colors shadow-sm",
                         isSelected
-                          ? "bg-slate-900 text-white"
-                          : "bg-white text-slate-900 shadow-sm"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-card text-foreground"
                       )}
                     >
                       <Icon size={24} />
@@ -96,7 +96,7 @@ export default function Onboarding() {
             <Button
               variant="outline"
               size="lg"
-              className="h-14 rounded-full border-slate-200 px-8 text-lg hover:bg-slate-50"
+              className="h-14 rounded-full px-8 text-lg"
               onClick={() => router.push("/map")}
             >
               Back
@@ -105,10 +105,8 @@ export default function Onboarding() {
               size="lg"
               disabled={selectedInterests.length === 0}
               className={cn(
-                "h-14 rounded-full px-10 text-lg font-semibold text-white",
-                selectedInterests.length === 0
-                  ? "bg-slate-900 opacity-50 cursor-not-allowed"
-                  : "bg-slate-900 hover:bg-slate-800 hover:shadow-lg"
+                "h-14 rounded-full px-10 text-lg font-semibold",
+                selectedInterests.length === 0 ? "opacity-50 cursor-not-allowed" : ""
               )}
               onClick={handleNext}
             >

@@ -108,28 +108,22 @@ export default function Map() {
   const placesForMap = allPlaces.filter(place => shouldShowOnMap(place, searchParams));
 
   return (
-    <div className="relative min-h-screen bg-slate-50 font-sans text-slate-900 overflow-hidden selection:bg-orange-100">
+    <div className="relative min-h-screen overflow-hidden">
       {/* Navbar */}
-      <nav className="bg-white border-b border-slate-200 px-6 py-4">
-        <div className="flex items-center justify-between">
+      <nav className="sticky top-0 z-20 px-6 py-4 border-b border-border/60 bg-card/70 backdrop-blur-md">
+        <div className="flex items-center justify-between max-w-7xl mx-auto">
           <div className="flex items-center gap-2">
-            <Link href="/" className="flex items-center gap-1 font-medium text-xl tracking-tight hover:opacity-80 transition-opacity">
+            <Link href="/" className="flex items-center gap-2 font-medium text-lg tracking-tight hover:opacity-90 transition-opacity">
               <span className="flex h-8 w-8 items-center justify-center rounded-lg text-white">
                 <Image src="/map-pin-area.svg" alt="Ilocos Norte Tourism Path Planner" width={20} height={20} />
               </span>
               <span>Ilocos Norte Tourism Path Planner</span>
             </Link>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
-            <div className="transition-colors hover:text-black">
-              Bring joy to your journey.
-            </div>
-            <span className="h-4 w-px bg-slate-200"></span>
-            <Button
-              asChild
-              variant="secondary"
-              className="rounded-full bg-slate-100 px-5 font-medium text-slate-900 hover:bg-slate-200"
-            >
+          <div className="hidden md:flex items-center gap-6 text-sm font-medium text-foreground/70">
+            <div className="transition-colors hover:text-foreground">Bring joy to your journey.</div>
+            <span className="h-4 w-px bg-border"></span>
+            <Button asChild variant="secondary" className="rounded-full px-5">
               <Link href="/onboarding">Reset Planning</Link>
             </Button>
           </div>
@@ -139,14 +133,14 @@ export default function Map() {
       {/* Main Content - 3 Column Layout */}
       <main className="flex h-[calc(100vh-73px)]">
         {/* Left Panel - Destination Cards */}
-        <section className="w-[420px] bg-white border-r border-slate-200 flex flex-col">
-          <div className="p-4 border-b border-slate-200">
+        <section className="w-[420px] bg-card/70 backdrop-blur-md border-r border-border/60 flex flex-col animate-fade-in">
+          <div className="p-4 border-b border-border/60">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-sm font-semibold text-slate-900">
+              <div className="flex items-center gap-2 text-sm font-semibold">
                 <Layers size={18} />
                 <span>Destinations</span>
               </div>
-              <span className="text-xs text-slate-500">{sortedPlacesForCards.length} places</span>
+              <span className="text-xs text-foreground/60">{sortedPlacesForCards.length} places</span>
             </div>
           </div>
           <div className="flex-1 p-4 overflow-y-auto">
@@ -156,31 +150,31 @@ export default function Map() {
                 <div
                   key={index}
                   onClick={() => setSelectedPlace(place)}
-                  className="bg-slate-50 rounded-xl border border-slate-100 hover:border-slate-300 hover:shadow-sm transition-all cursor-pointer overflow-hidden"
+                  className="rounded-xl border border-border/60 bg-card/70 backdrop-blur hover:shadow-sm hover:-translate-y-0.5 transition-all cursor-pointer overflow-hidden animate-scale-in"
+                  style={{ animationDelay: `${index * 40}ms` }}
                 >
                   {/* Photo placeholder */}
-                  <div className="aspect-square bg-slate-200 relative">
-                    <div className="absolute inset-0 flex items-center justify-center text-slate-400 text-xs">
-                      Photo
-                    </div>
+                  <div className="aspect-square relative overflow-hidden">
+                    <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent)] animate-shimmer" />
+                    <div className="absolute inset-0 bg-muted" />
                   </div>
                   {/* Card Content */}
                   <div className="p-3 space-y-1">
                     <div className="flex justify-between items-start gap-1">
-                      <h3 className="font-semibold text-slate-900 text-sm line-clamp-1">{place.title}</h3>
+                      <h3 className="font-semibold text-sm line-clamp-1">{place.title}</h3>
                       <div className="flex items-center gap-0.5 text-xs shrink-0">
                         <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
                         <span className="text-yellow-600 font-medium">{place.rating}</span>
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5 text-xs">
-                      <span className="text-slate-500">{place.timeRange}</span>
+                      <span className="text-foreground/60">{place.timeRange}</span>
                       <span className={`font-medium ${getIsOpen(place.timeRange) ? 'text-green-600' : 'text-red-600'}`}>
                         {getIsOpen(place.timeRange) ? '· Open' : '· Closed'}
                       </span>
                     </div>
-                    <p className="text-slate-500 text-xs capitalize">{place.type}</p>
-                    <p className="text-slate-400 text-xs truncate">{place.description}</p>
+                    <p className="text-foreground/60 text-xs capitalize">{place.type}</p>
+                    <p className="text-foreground/50 text-xs truncate">{place.description}</p>
                   </div>
                 </div>
               ))}
@@ -191,7 +185,7 @@ export default function Map() {
         {/* Right Panel - Map */}
         <section className="flex-1 relative">
           <div className="absolute top-4 left-4 z-10">
-            <div className="flex items-center gap-2 bg-white px-3 py-2 rounded-full shadow-md text-sm font-medium text-slate-900">
+            <div className="flex items-center gap-2 bg-card/80 backdrop-blur px-3 py-2 rounded-full shadow text-sm font-medium">
               <MapPin size={16} />
               <span>Ilocos Norte, Philippines</span>
             </div>
@@ -207,15 +201,15 @@ export default function Map() {
             <>
               <DialogHeader>
                 <DialogTitle className="text-2xl">{selectedPlace.title}</DialogTitle>
-                <div className="flex items-center gap-4 mt-2 text-sm text-slate-500">
+                <div className="flex items-center gap-4 mt-2 text-sm text-foreground/70">
                   <span className="flex items-center gap-1">
                     <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
                     <span className="font-medium text-yellow-600">{selectedPlace.rating}</span>
                   </span>
-                  <span className="text-slate-400">·</span>
+                  <span className="text-foreground/40">·</span>
                   <span className="capitalize">{selectedPlace.type}</span>
-                  <span className="text-slate-400">·</span>
-                  <span className="text-slate-500">{selectedPlace.timeRange}</span>
+                  <span className="text-foreground/40">·</span>
+                  <span className="text-foreground/70">{selectedPlace.timeRange}</span>
                   <span className={`font-medium ${getIsOpen(selectedPlace.timeRange) ? 'text-green-600' : 'text-red-600'}`}>
                     {getIsOpen(selectedPlace.timeRange) ? '· Open' : '· Closed'}
                   </span>
@@ -224,22 +218,22 @@ export default function Map() {
               
               <div className="mt-4 space-y-4">
                 {/* Photo placeholder */}
-                <div className="w-full h-64 bg-slate-200 rounded-lg relative">
-                  <div className="absolute inset-0 flex items-center justify-center text-slate-400">
+                <div className="w-full h-64 bg-muted rounded-lg relative">
+                  <div className="absolute inset-0 flex items-center justify-center text-foreground/40">
                     Photo
                   </div>
                 </div>
                 
                 {/* Description */}
                 <div>
-                  <h3 className="font-semibold text-slate-900 mb-2">About</h3>
-                  <p className="text-slate-600 leading-relaxed">{selectedPlace.description}</p>
+                  <h3 className="font-semibold mb-2">About</h3>
+                  <p className="text-foreground/70 leading-relaxed">{selectedPlace.description}</p>
                 </div>
                 
                 {/* Location Info */}
-                <div className="pt-4 border-t border-slate-200">
-                  <h3 className="font-semibold text-slate-900 mb-2">Location</h3>
-                  <div className="flex items-center gap-2 text-slate-600">
+                <div className="pt-4 border-t border-border/60">
+                  <h3 className="font-semibold mb-2">Location</h3>
+                  <div className="flex items-center gap-2 text-foreground/70">
                     <MapPin size={16} />
                     <span>{selectedPlace.latitude.toFixed(6)}, {selectedPlace.longitude.toFixed(6)}</span>
                   </div>

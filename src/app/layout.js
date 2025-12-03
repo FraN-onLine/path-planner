@@ -14,10 +14,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} antialiased`}
-      >
-        {children}
+      <body className={`${inter.variable} antialiased relative min-h-dvh overflow-x-hidden`}>
+        {/* Decorative background */}
+        <div aria-hidden className="pointer-events-none fixed inset-0 bg-app-gradient" />
+        {/* Subtle top gradient for depth */}
+        <div aria-hidden className="pointer-events-none fixed inset-x-0 top-0 h-40 bg-gradient-to-b from-background/0 via-background/40 to-background/0" />
+        <div className="relative">
+          {children}
+        </div>
       </body>
     </html>
   );

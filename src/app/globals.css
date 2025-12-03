@@ -50,7 +50,7 @@ body {
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
   --font-serif: Georgia, serif;
-  --radius: 1.675rem;
+  --radius: 1.2rem;
   --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
   --tracking-tight: calc(var(--tracking-normal) - 0.025em);
   --tracking-wide: calc(var(--tracking-normal) + 0.025em);
@@ -77,39 +77,40 @@ body {
 }
 
 :root {
-  --radius: 1.675rem;
-  --background: oklch(1.0000 0 0);
-  --foreground: oklch(0.2046 0 0);
-  --card: oklch(1.0000 0 0);
-  --card-foreground: oklch(0.2046 0 0);
-  --popover: oklch(1.0000 0 0);
-  --popover-foreground: oklch(0.2046 0 0);
-  --primary: oklch(0.2046 0 0);
-  --primary-foreground: oklch(1.0000 0 0);
-  --secondary: oklch(0.9551 0 0);
-  --secondary-foreground: oklch(0.2046 0 0);
-  --muted: oklch(0.9551 0 0);
-  --muted-foreground: oklch(0.5555 0 0);
-  --accent: oklch(0.9551 0 0);
-  --accent-foreground: oklch(0.2046 0 0);
-  --destructive: oklch(0.6368 0.2078 25.3313);
-  --border: oklch(0.9276 0.0058 264.5313);
-  --input: oklch(1.0000 0 0);
-  --ring: oklch(0.8699 0 0);
-  --chart-1: oklch(0.6368 0.2078 25.3313);
-  --chart-2: oklch(0.7049 0.1867 47.6044);
-  --chart-3: oklch(0.7686 0.1647 70.0804);
-  --chart-4: oklch(0.7952 0.1617 86.0468);
-  --chart-5: oklch(0.7681 0.2044 130.8498);
-  --sidebar: oklch(1.0000 0 0);
-  --sidebar-foreground: oklch(0.2046 0 0);
-  --sidebar-primary: oklch(0.2046 0 0);
-  --sidebar-primary-foreground: oklch(1.0000 0 0);
-  --sidebar-accent: oklch(0.9551 0 0);
-  --sidebar-accent-foreground: oklch(0.2046 0 0);
-  --sidebar-border: oklch(0.9276 0.0058 264.5313);
-  --sidebar-ring: oklch(0.8699 0 0);
-  --destructive-foreground: oklch(1.0000 0 0);
+  --radius: 1.2rem;
+  /* Modern, soft light palette */
+  --background: oklch(0.985 0.015 255); /* soft gray with cool tint */
+  --foreground: oklch(0.21 0.03 255);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.23 0.03 255);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.23 0.03 255);
+  --primary: oklch(0.62 0.23 275); /* violet/indigo */
+  --primary-foreground: oklch(0.98 0 0);
+  --secondary: oklch(0.97 0.02 260);
+  --secondary-foreground: oklch(0.28 0.02 260);
+  --muted: oklch(0.95 0.01 255);
+  --muted-foreground: oklch(0.55 0.03 255);
+  --accent: oklch(0.92 0.06 265); /* cool accent */
+  --accent-foreground: oklch(0.25 0.03 260);
+  --destructive: oklch(0.62 0.22 27);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.92 0.01 255);
+  --input: oklch(1 0 0);
+  --ring: oklch(0.8 0.05 270);
+  --chart-1: oklch(0.62 0.23 275);
+  --chart-2: oklch(0.69 0.21 245);
+  --chart-3: oklch(0.7 0.17 200);
+  --chart-4: oklch(0.75 0.14 150);
+  --chart-5: oklch(0.68 0.2 110);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.21 0.03 255);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --font-serif: Georgia, serif;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
@@ -133,39 +134,32 @@ body {
 }
 
 .dark {
-  --background: oklch(0 0 0);
-  --foreground: oklch(1.0000 0 0);
-  --card: oklch(0 0 0);
-  --card-foreground: oklch(1.0000 0 0);
-  --popover: oklch(0 0 0);
-  --popover-foreground: oklch(1.0000 0 0);
-  --primary: oklch(1.0000 0 0);
-  --primary-foreground: oklch(0 0 0);
-  --secondary: oklch(0.2178 0 0);
-  --secondary-foreground: oklch(1.0000 0 0);
-  --muted: oklch(0.2178 0 0);
-  --muted-foreground: oklch(0.7058 0 0);
-  --accent: oklch(0.2178 0 0);
-  --accent-foreground: oklch(1.0000 0 0);
-  --destructive: oklch(0.5771 0.2152 27.3250);
-  --border: oklch(0.2686 0 0);
-  --input: oklch(0 0 0);
-  --ring: oklch(0.3715 0 0);
-  --chart-1: oklch(0.5771 0.2152 27.3250);
-  --chart-2: oklch(0.6461 0.1943 41.1158);
-  --chart-3: oklch(0.6658 0.1574 58.3183);
-  --chart-4: oklch(0.6806 0.1423 75.8340);
-  --chart-5: oklch(0.6482 0.1754 131.6839);
-  --sidebar: oklch(0 0 0);
-  --sidebar-foreground: oklch(1.0000 0 0);
-  --sidebar-primary: oklch(1.0000 0 0);
-  --sidebar-primary-foreground: oklch(0 0 0);
-  --sidebar-accent: oklch(0.2178 0 0);
-  --sidebar-accent-foreground: oklch(1.0000 0 0);
-  --sidebar-border: oklch(0.2686 0 0);
-  --sidebar-ring: oklch(0.3715 0 0);
-  --destructive-foreground: oklch(1.0000 0 0);
-  --radius: 1.675rem;
+  /* Elegant dark with deep slate and violet accents */
+  --background: oklch(0.13 0.02 260);
+  --foreground: oklch(0.98 0 0);
+  --card: oklch(0.18 0.02 260);
+  --card-foreground: oklch(0.98 0 0);
+  --popover: oklch(0.18 0.02 260);
+  --popover-foreground: oklch(0.98 0 0);
+  --primary: oklch(0.72 0.2 275);
+  --primary-foreground: oklch(0.13 0.02 260);
+  --secondary: oklch(0.22 0.01 260);
+  --secondary-foreground: oklch(0.96 0 0);
+  --muted: oklch(0.22 0.01 260);
+  --muted-foreground: oklch(0.7 0.02 255);
+  --accent: oklch(0.3 0.05 280);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.62 0.22 27);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.28 0.01 260);
+  --input: oklch(0.14 0.01 260);
+  --ring: oklch(0.7 0.18 275);
+  --chart-1: oklch(0.72 0.2 275);
+  --chart-2: oklch(0.69 0.21 245);
+  --chart-3: oklch(0.7 0.17 200);
+  --chart-4: oklch(0.75 0.14 150);
+  --chart-5: oklch(0.68 0.2 110);
+  --radius: 1.2rem;
   --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   --font-serif: Georgia, serif;
   --font-mono: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
@@ -192,7 +186,52 @@ body {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased selection:bg-primary/15 selection:text-foreground/90;
     letter-spacing: var(--tracking-normal);
   }
 }
+
+/* Decorative background helpers */
+.bg-app-gradient {
+  background-image:
+    radial-gradient(1200px 600px at 0% -5%, color-mix(in oklch, var(--primary) 15%, transparent) 0%, transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, color-mix(in oklch, var(--accent) 25%, transparent) 0%, transparent 60%),
+    radial-gradient(700px 400px at 50% 110%, color-mix(in oklch, var(--ring) 18%, transparent) 0%, transparent 60%);
+}
+
+/* Subtle motion primitives */
+@keyframes fade-in {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(12px) }
+  to { opacity: 1; transform: translateY(0) }
+}
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.98) }
+  to { opacity: 1; transform: scale(1) }
+}
+
+.animate-fade-in { animation: fade-in 600ms var(--ease-out, cubic-bezier(.22,1,.36,1)) both }
+.animate-slide-up { animation: slide-up 600ms var(--ease-out, cubic-bezier(.22,1,.36,1)) both }
+.animate-scale-in { animation: scale-in 400ms var(--ease-out, cubic-bezier(.22,1,.36,1)) both }
+
+/* Extra motion helpers */
+@keyframes float-soft {
+  0% { transform: translateY(0) }
+  50% { transform: translateY(-6px) }
+  100% { transform: translateY(0) }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0 }
+  100% { background-position: 200% 0 }
+}
+@keyframes pop-in {
+  0% { opacity: 0; transform: translateY(8px) scale(.98) }
+  100% { opacity: 1; transform: translateY(0) scale(1) }
+}
+
+.animate-float-soft { animation: float-soft 8s ease-in-out infinite }
+.animate-shimmer { background-size: 200% 100%; animation: shimmer 1.4s linear infinite }
+.animate-pop-in { animation: pop-in 500ms cubic-bezier(.22,1,.36,1) both }
