@@ -6,8 +6,8 @@
       "rating": 4.5,
       "description": "A 1612 church features Italian Renaissance styling, a stately facade & an adjacent bell tower.",
       "latitude": 18.194137424082157,
-      "longitude": 120.5933618231169
-      
+      "longitude": 120.5933618231169,
+      "image": "/images/Laoag_Cathedral_2022.jpeg"
     },
     {
       "title": "San Agustin Church of Paoay",
@@ -16,7 +16,8 @@
       "rating": 4.7,
       "description": "Famous for its Baroque-style architecture, this 1710, catholic church offers regular mass services.",
       "latitude": 18.061802384229615,
-      "longitude": 120.52100233858496
+      "longitude": 120.52100233858496,
+      "image": "/images/PAOAY-CHURCH-1.jpg"
     },
     {
       "title": "La Virgen Milagrosa",
@@ -25,7 +26,8 @@
       "rating": 4.6,
       "description": "A severed wooden statue of the Virgin Mary, believed to have miraculously washed ashore in Ilocos Norte.",
       "latitude": 17.907238,
-      "longitude": 120.442948
+      "longitude": 120.442948,
+      "image": "/images/la-virgen.jpeg"
     },
   
     {
@@ -35,7 +37,8 @@
       "rating": 4.5,
       "description": "Tropical, waterfront area with a sandy beach, offering swimming, surfing, sunbathing & picnic space.",
       "latitude": 18.621101,
-      "longitude": 120.783931
+      "longitude": 120.783931,
+      "image": "/images/83548.png"
     },
     {
       "title": "Saud Beach",
@@ -44,7 +47,8 @@
       "rating": 4.5,
       "description": "Uncrowded tropical beach with gentle waves in shallow water & overlooked by a few resort hotels.",
       "latitude": 18.581168,
-      "longitude": 120.783924
+      "longitude": 120.783924,
+      "image": "/images/saud-beach.jpg"
     },
     {
       "title": "Badoc Island White Beach",
@@ -53,7 +57,8 @@
       "rating": 4.6,
       "description": "A secluded island beach featuring white sand and clear waters, located off the coast of Badoc.",
       "latitude": 17.918228,
-      "longitude": 120.415717
+      "longitude": 120.415717,
+      "image": "/images/82611.png"
     },
   
     {
@@ -63,7 +68,8 @@
       "rating": 4.4,
       "description": "A cultural museum preserving Ilocano heritage through traditional clothing, artifacts, and historical exhibits.",
       "latitude": 18.196904243892604,
-      "longitude": 120.59255914098233
+      "longitude": 120.59255914098233,
+      "image": "/images/Museo_Ilocos_Norte_(Gen._Luna,_Laoag,_Ilocos_Norte__11-16-2022).jpg"
     },
     {
       "title": "Malacañang of the North",
@@ -72,7 +78,8 @@
       "rating": 4.4,
       "description": "A former presidential residence turned museum, showcasing the Marcos family's history and lifestyle.",
       "latitude": 18.12836734587835,
-      "longitude": 120.54003989559925
+      "longitude": 120.54003989559925,
+      "image": "/images/Malacanang of the North.JPG"
     },
     {
       "title": "Juan Luna Shrine (Badoc)",
@@ -81,7 +88,8 @@
       "rating": 4.5,
       "description": "Ancestral home and museum honoring Juan Luna, featuring replicas of his works and memorabilia.",
       "latitude": 17.927478565312903,
-      "longitude": 120.47704599946084
+      "longitude": 120.47704599946084,
+      "image": "/images/juan-luna-house.jpg"
     },
   
     {
@@ -89,27 +97,30 @@
       "type": "cuisine",
       "timeRange": "8:00 AM - 12:00 AM",
       "rating": 4.5,
-      "description": "Home of Batac’s famous Empanadas.",
+      "description": "Home of Batac's famous Empanadas.",
       "latitude": 18.05486,
-      "longitude": 120.56408
+      "longitude": 120.56408,
+      "image": "/images/11407.png"
     },
     {
       "title": "Cuisine de Iloco Restaurant",
       "type": "cuisine",
       "timeRange": "10:00 AM - 8:30 PM",
       "rating": 4.3,
-      "description": "One of Ilocos Norte’s must-try restaurants serving a plethora of Ilocano Cuisines.",
+      "description": "One of Ilocos Norte's must-try restaurants serving a plethora of Ilocano Cuisines.",
       "latitude": 18.20379,
-      "longitude": 120.5895
+      "longitude": 120.5895,
+      "image": "/images/cuisine-de-iloco.jpg"
     },
     {
-      "title": "Eagle’s Nest Bar and Restaurant",
+      "title": "Eagle's Nest Bar and Restaurant",
       "type": "cuisine",
       "timeRange": "6:00 AM - 2:00 AM",
       "rating": 4.5,
       "description": "A restaurant with an extensive menu featuring Filipino cuisine including native Ilocano dishes.",
       "latitude": 18.21781544902319,
-      "longitude": 120.60152422616703
+      "longitude": 120.60152422616703,
+      "image": "/images/eagles-nest.jpg"
     },
   
     {
@@ -119,7 +130,8 @@
       "rating": 4.6,
       "description": "Noteworthy geological formation by the beach, accessible by hiking or horseback riding.",
       "latitude": 18.538737,
-      "longitude": 120.653497
+      "longitude": 120.653497,
+      "image": "/images/Kapurpurawan_Rock_Formation_Medium_shot_2021.jpg"
     },
     {
       "title": "Tanap-Avis Falls",
@@ -128,7 +140,8 @@
       "rating": 4.5,
       "description": "The basin-like waterfalls is a popular destination because of its pigmented turquoise waters.",
       "latitude": 18.478513,
-      "longitude": 120.673604
+      "longitude": 120.673604,
+      "image": "/images/Tanap_Avis_Falls_Rock_formations.jpg"
     },
     {
       "title": "Bantay Abot Cave",
@@ -137,7 +150,8 @@
       "rating": 4.5,
       "description": "Short tunnel through a headland covered in vegetation, overlooking a rocky beach with strong waves.",
       "latitude": 18.615991,
-      "longitude": 120.870207
+      "longitude": 120.870207,
+      "image": "/images/Bantay-Abot-Cave-21.jpg"
     },
   
     {
@@ -147,7 +161,8 @@
       "rating": 4.7,
       "description": "Oceanfront wind farm & tourist attraction featuring 20 turbines facing the sea.",
       "latitude": 18.528569,
-      "longitude": 120.718110
+      "longitude": 120.718110,
+      "image": "/images/Bangui Wind Mark Windmills 6.png"
     },
     {
       "title": "Cape Bojeador Lighthouse",
@@ -156,7 +171,8 @@
       "rating": 4.5,
       "description": "Philippine-Spanish lighthouse atop a hill, built in 1892.",
       "latitude": 18.512219,
-      "longitude": 120.597583
+      "longitude": 120.597583,
+      "image": "/images/cape-bojeador.jpg"
     },
     {
       "title": "Patapat Viaduct",
@@ -165,7 +181,8 @@
       "rating": 4.7,
       "description": "Elevated concrete bridge featuring picturesque mountain & sea views.",
       "latitude": 18.575581,
-      "longitude": 120.894588
+      "longitude": 120.894588,
+      "image": "/images/Patapat_Viaduct_in_Pagudpud.jpg"
     },
   
     {
@@ -175,7 +192,8 @@
       "rating": 4.6,
       "description": "A historical natural landscape used during World War II.",
       "latitude": 18.094769191341722,
-      "longitude": 120.48620654491451
+      "longitude": 120.48620654491451,
+      "image": "/images/Paoay-Suba-Sand-Dunes-4x4-1.jpg"
     },
   
     {
@@ -185,7 +203,8 @@
       "rating": 4.1,
       "description": "A produce market offering traditional Ilocano goods.",
       "latitude": 18.06602271499474,
-      "longitude": 120.56355865292664
+      "longitude": 120.56355865292664,
+      "image": "/images/10570.png"
     },
     {
       "title": "Laoag City Commercial Complex",
@@ -194,7 +213,8 @@
       "rating": 4.1,
       "description": "A public market where you can find almost everything.",
       "latitude": 18.194222439153997,
-      "longitude": 120.59550068021454
+      "longitude": 120.59550068021454,
+      "image": "/images/53117.png"
     },
     {
       "title": "Nagbacalan Loomweavers",
@@ -203,7 +223,8 @@
       "rating": 4.0,
       "description": "Traditional Ilocano textile and fabric weaving.",
       "latitude": 18.12086,
-      "longitude": 120.52682
+      "longitude": 120.52682,
+      "image": "/images/6085.png"
     }
 ]
   

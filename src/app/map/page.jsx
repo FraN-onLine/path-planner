@@ -153,10 +153,22 @@ export default function Map() {
                   className="rounded-xl border border-border/60 bg-card/70 backdrop-blur hover:shadow-sm hover:-translate-y-0.5 transition-all cursor-pointer overflow-hidden animate-scale-in"
                   style={{ animationDelay: `${index * 40}ms` }}
                 >
-                  {/* Photo placeholder */}
+                  {/* Photo */}
                   <div className="aspect-square relative overflow-hidden">
-                    <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent)] animate-shimmer" />
-                    <div className="absolute inset-0 bg-muted" />
+                    {place.image ? (
+                      <Image
+                        src={place.image}
+                        alt={place.title}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 200px"
+                      />
+                    ) : (
+                      <>
+                        <div className="absolute inset-0 bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.6),transparent)] animate-shimmer" />
+                        <div className="absolute inset-0 bg-muted" />
+                      </>
+                    )}
                   </div>
                   {/* Card Content */}
                   <div className="p-3 space-y-1">
@@ -217,11 +229,21 @@ export default function Map() {
               </DialogHeader>
               
               <div className="mt-4 space-y-4">
-                {/* Photo placeholder */}
-                <div className="w-full h-64 bg-muted rounded-lg relative">
-                  <div className="absolute inset-0 flex items-center justify-center text-foreground/40">
-                    Photo
-                  </div>
+                {/* Photo */}
+                <div className="w-full h-64 bg-muted rounded-lg relative overflow-hidden">
+                  {selectedPlace.image ? (
+                    <Image
+                      src={selectedPlace.image}
+                      alt={selectedPlace.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 672px"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center text-foreground/40">
+                      Photo
+                    </div>
+                  )}
                 </div>
                 
                 {/* Description */}
