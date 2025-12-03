@@ -85,7 +85,7 @@ body {
   --card-foreground: oklch(0.23 0.03 255);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.23 0.03 255);
-  --primary: oklch(0.62 0.23 275); /* violet/indigo */
+  --primary: oklch(0.60 0.19 255); /* blue like map marker #3b82f6 */
   --primary-foreground: oklch(0.98 0 0);
   --secondary: oklch(0.97 0.02 260);
   --secondary-foreground: oklch(0.28 0.02 260);
@@ -97,8 +97,8 @@ body {
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.92 0.01 255);
   --input: oklch(1 0 0);
-  --ring: oklch(0.8 0.05 270);
-  --chart-1: oklch(0.62 0.23 275);
+  --ring: oklch(0.70 0.15 255);
+  --chart-1: oklch(0.60 0.19 255);
   --chart-2: oklch(0.69 0.21 245);
   --chart-3: oklch(0.7 0.17 200);
   --chart-4: oklch(0.75 0.14 150);
@@ -134,15 +134,15 @@ body {
 }
 
 .dark {
-  /* Elegant dark with deep slate and violet accents */
+  /* Elegant dark with deep slate and blue accents */
   --background: oklch(0.13 0.02 260);
   --foreground: oklch(0.98 0 0);
   --card: oklch(0.18 0.02 260);
   --card-foreground: oklch(0.98 0 0);
   --popover: oklch(0.18 0.02 260);
   --popover-foreground: oklch(0.98 0 0);
-  --primary: oklch(0.72 0.2 275);
-  --primary-foreground: oklch(0.13 0.02 260);
+  --primary: oklch(0.65 0.19 255); /* blue like map marker */
+  --primary-foreground: oklch(0.98 0 0);
   --secondary: oklch(0.22 0.01 260);
   --secondary-foreground: oklch(0.96 0 0);
   --muted: oklch(0.22 0.01 260);
@@ -153,8 +153,8 @@ body {
   --destructive-foreground: oklch(0.98 0 0);
   --border: oklch(0.28 0.01 260);
   --input: oklch(0.14 0.01 260);
-  --ring: oklch(0.7 0.18 275);
-  --chart-1: oklch(0.72 0.2 275);
+  --ring: oklch(0.65 0.19 255);
+  --chart-1: oklch(0.65 0.19 255);
   --chart-2: oklch(0.69 0.21 245);
   --chart-3: oklch(0.7 0.17 200);
   --chart-4: oklch(0.75 0.14 150);

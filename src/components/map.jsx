@@ -300,7 +300,7 @@ export default function Map({ destinations = [] }) {
       const userLocationMarker = createUserLocationMarker();
       new mapboxgl.default.Marker(userLocationMarker)
         .setLngLat([120.545021, 18.059779])
-        .addTo(map.current);
+              .addTo(map.current);
 
       // Mark map as loaded when ready
       map.current.on('load', () => {
@@ -352,7 +352,7 @@ export default function Map({ destinations = [] }) {
 
   return (
     <div className="relative w-full h-full">
-      <div ref={mapContainer} className="w-full h-full" />
+    <div ref={mapContainer} className="w-full h-full" />
       
       {/* Directions Panel */}
       {currentRoute && (

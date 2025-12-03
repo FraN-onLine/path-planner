@@ -1,101 +1,134 @@
-// Uniform Cost Search Utility
-// Sorts destinations by closest distance from user location
+// Uniform Cost Search (UCS) - Finds the shortest path by sorting destinations by distance
+// This helps tourists visit places in the most efficient order
 
 /**
  * Sort destinations by distance from user location (closest first)
- * @param {Array} destinations - Array of destination objects
- * @param {Object} userDistances - User distances object from user-distances.json
- * @returns {Array} - Sorted array of destinations (closest first)
+ * Think of this like: "Which tourist spot is nearest to me right now?"
+ * 
+ * @param {Array} destinations - List of tourist destinations
+ * @param {Object} userDistances - Pre-calculated distances from user to each destination
+ * @returns {Array} - List sorted from closest to farthest
  */
 export function sortByClosestDistance(destinations, userDistances) {
+  // Step 1: Check if we have destinations to sort
   if (!destinations || destinations.length === 0) {
-    return [];
+    return []; // No destinations? Return empty list
   }
 
+  // Step 2: Check if we have distance data
   if (!userDistances || !userDistances.distances) {
-    console.warn('User distances not available, returning original order');
-    return [...destinations];
+    console.warn('No distance data available, keeping original order');
+    return [...destinations]; // Return copy of original list
   }
 
-  // Create a copy and sort by distance
-  const sorted = [...destinations].sort((a, b) => {
-    const distA = userDistances.distances[a.title];
-    const distB = userDistances.distances[b.title];
+  // Step 3: Sort destinations by distance (closest first)
+  const sorted = [...destinations].sort((placeA, placeB) => {
+    // Get distance info for both places
+    const distanceToA = userDistances.distances[placeA.title];
+    const distanceToB = userDistances.distances[placeB.title];
 
-    // Handle missing distances
-    if (!distA || distA.distance === null) return 1;
-    if (!distB || distB.distance === null) return -1;
+    // If place A has no distance data, push it to the end
+    if (!distanceToA) return 1;
+    // If place B has no distance data, push it to the end
+    if (!distanceToB) return -1;
 
-    // Sort by distance (ascending - closest first)
-    return distA.distance - distB.distance;
+    // Compare distances: smaller number = closer = comes first
+    // Example: 5km - 10km = -5 (negative means A comes before B)
+    return distanceToA.distance - distanceToB.distance;
   });
 
   return sorted;
 }
 
 /**
- * Get distance from user to a specific destination
- * @param {string} destinationTitle - Title of the destination
- * @param {Object} userDistances - User distances object from user-distances.json
- * @returns {Object|null} - Distance object {distance, duration} or null
+ * Get distance info for one specific destination
+ * Example: "How far is Paoay Church from me?"
+ * 
+ * @param {string} destinationTitle - Name of the place (e.g., "Paoay Church")
+ * @param {Object} userDistances - All distance data
+ * @returns {Object|null} - {distance: 5000, duration: 300} or null if not found
  */
 export function getDistanceToDestination(destinationTitle, userDistances) {
+  // Check if we have distance data
   if (!userDistances || !userDistances.distances) {
-    return null;
+    return null; // No data available
   }
 
+  // Look up the destination and return its distance info
   return userDistances.distances[destinationTitle] || null;
 }
 
 /**
- * Format distance in km
- * @param {number} distanceInMeters - Distance in meters
- * @returns {string} - Formatted distance string (e.g., "5.42 km")
+ * Convert meters to a readable format
+ * Example: 5420 meters → "5.42 km"
+ * 
+ * @param {number} distanceInMeters - Distance in meters (e.g., 5420)
+ * @returns {string} - Human-readable text (e.g., "5.42 km")
  */
 export function formatDistance(distanceInMeters) {
-  if (!distanceInMeters || distanceInMeters === null) {
-    return 'N/A';
+  // Check if distance exists
+  if (!distanceInMeters) {
+    return 'N/A'; // Not available
   }
 
-  const km = distanceInMeters / 1000;
-  return `${km.toFixed(2)} km`;
+  // Convert meters to kilometers (1000 meters = 1 km)
+  const kilometers = distanceInMeters / 1000;
+  
+  // Format to 2 decimal places (e.g., 5.42 km)
+  return `${kilometers.toFixed(2)} km`;
 }
 
 /**
- * Format duration in minutes or hours
- * @param {number} durationInSeconds - Duration in seconds
- * @returns {string} - Formatted duration string (e.g., "25 min" or "1h 30min")
+ * Convert seconds to a readable time format
+ * Examples: 
+ *   - 1500 seconds → "25 min"
+ *   - 5400 seconds → "1h 30min"
+ * 
+ * @param {number} durationInSeconds - Time in seconds (e.g., 1500)
+ * @returns {string} - Human-readable text (e.g., "25 min")
  */
 export function formatDuration(durationInSeconds) {
-  if (!durationInSeconds || durationInSeconds === null) {
-    return 'N/A';
+  // Check if duration exists
+  if (!durationInSeconds) {
+    return 'N/A'; // Not available
   }
 
-  const minutes = Math.round(durationInSeconds / 60);
+  // Convert seconds to minutes (60 seconds = 1 minute)
+  const totalMinutes = Math.round(durationInSeconds / 60);
   
-  if (minutes < 60) {
-    return `${minutes} min`;
+  // If less than 1 hour, just show minutes
+  if (totalMinutes < 60) {
+    return `${totalMinutes} min`;
   }
 
-  const hours = Math.floor(minutes / 60);
-  const remainingMinutes = minutes % 60;
+  // If 1 hour or more, show hours and minutes
+  const hours = Math.floor(totalMinutes / 60); // Full hours
+  const minutes = totalMinutes % 60; // Leftover minutes
   
-  if (remainingMinutes === 0) {
+  // If exactly on the hour (no extra minutes)
+  if (minutes === 0) {
     return `${hours}h`;
   }
 
-  return `${hours}h ${remainingMinutes}min`;
+  // Show both hours and minutes
+  return `${hours}h ${minutes}min`;
 }
 
 /**
- * Get closest N destinations from user location
- * @param {Array} destinations - Array of destination objects
- * @param {Object} userDistances - User distances object
- * @param {number} limit - Number of closest destinations to return
- * @returns {Array} - Array of closest destinations
+ * Get only the top N closest destinations
+ * Example: "Show me the 5 nearest tourist spots"
+ * 
+ * @param {Array} destinations - All tourist destinations
+ * @param {Object} userDistances - Distance data
+ * @param {number} limit - How many places to return (default: 5)
+ * @returns {Array} - Top N closest destinations
  */
 export function getClosestDestinations(destinations, userDistances, limit = 5) {
+  // Step 1: Sort all destinations by distance
   const sorted = sortByClosestDistance(destinations, userDistances);
+  
+  // Step 2: Take only the first N items (the closest ones)
+  // Example: If limit = 5, get the 5 closest places
   return sorted.slice(0, limit);
 }
 
